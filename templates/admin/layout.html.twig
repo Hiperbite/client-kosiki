@@ -13,11 +13,31 @@
 {% endblock %}
 
 {% block header_navigation_links %}
-    <li class="nav-item{{ _route in ['admin_index', 'admin_post_index'] ? ' active' : '' }}">
-        <a class="nav-link" href="{{ path('admin_post_index') }}">
-            <i class="fa fa-list-alt" aria-hidden="true"></i> {{ 'menu.post_list'|trans }}
-        </a>
-    </li>
+<li class="nav-item{{ _route in ['admin_index', 'admin_post_index'] ? ' active' : '' }}">
+    <a class="nav-link" href="{{ path('admin_post_index') }}">
+        <i class="fa fa-list-alt" aria-hidden="true"></i> {{ 'menu.post_list'|trans }}
+    </a>
+</li>
+<li class="nav-item{{ _route in ['app_carousel_index', 'app_carousel_index'] ? ' active' : '' }}">
+    <a class="nav-link" href="{{ path('app_carousel_index') }}">
+        Carousel
+    </a>
+</li>
+<li class="nav-item{{ _route in ['app_carousel_index', 'app_carousel_index'] ? ' active' : '' }}">
+    <a class="nav-link" href="{{ path('app_carousel_index') }}">
+        Carousel
+    </a>
+</li>
+<li class="nav-item{{ _route in ['app_service_index', 'app_service_new'] ? ' active' : '' }}">
+    <a class="nav-link" href="{{ path('app_service_index',{id:1}) }}">
+        Serviços
+    </a>
+</li>
+<li class="nav-item{{ _route in ['app_contact_edit', 'app_contact_new'] ? ' active' : '' }}">
+    <a class="nav-link" href="{{ path('app_contact_edit',{id:1}) }}">
+        Contactos
+    </a>
+</li>
     <li class="nav-item">
         <a class="nav-link" href="{{ path('blog_index') }}">
             <i class="fa fa-home" aria-hidden="true"></i> {{ 'menu.back_to_blog'|trans }}

@@ -157,4 +157,32 @@ final class BlogController extends AbstractController
     {
         return $this->render('blog/search.html.twig', ['query' => (string) $request->query->get('q', '')]);
     }
+
+
+
+    /**
+     * NOTE: For standard formats, Symfony will also automatically choose the best
+     * Content-Type header for the response.
+     *
+     * See https://symfony.com/doc/current/routing.html#special-parameters
+     */
+    #[Route('/as/list', name: 'blog_list_index', defaults: ['page' => '1', '_format' => 'html'], methods: ['GET'])]
+    #[Route('/as/page/{page<[1-9]\d{0,8}>}', name: 'blog_index_list__paginated', defaults: ['_format' => 'html'], methods: ['GET'])]
+    #[Cache(smaxage: 10)]
+    public function renderBlog(Request $request, int $page, string $_format, PostRepository $posts, TagRepository $tags): Response
+    {
+        $tag = null;
+        if ($request->query->has('tag')) {
+            $tag = $tags->findOneBy(['name' => $request->query->get('tag')]);
+        }
+        $latestPosts = $posts->findLatest($page, $tag);
+              
+        // Every template name also has two extensions that specify the format and
+        // engine for that template.
+        // See https://symfony.com/doc/current/templates.html#template-naming
+        return $this->render('blog/partials/card.html.twig', [
+            'posts' => $latestPosts,
+            'tagName' => $tag?->getName(),
+        ]);
+    }
 }

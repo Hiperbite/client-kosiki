@@ -1,0 +1,108 @@
+
+{% extends 'start.html.twig' %}
+
+{% block body_id 'blog_post_show' %}
+
+{% block body %}
+   
+
+<!-- Page Header Start -->
+<div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s" >
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-white mb-4 animated slideInDown">Fale connosco</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="#">Pagina</a></li>
+                <li class="breadcrumb-item text-primary" aria-current="page">Contactos</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<!-- Page Header End -->
+
+<!-- Contact Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center mx-auto wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px;">
+            <p class="fs-5 fw-medium text-primary">Fale connosco</p>
+            <h1 class="display-5 mb-5">Se tiveres alguma questão, diz-nos</h1>
+        </div>
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
+                <h3 class="mb-4">Deixe o seu comentario no formulário abaixo</h3>
+                <p class="mb-4">...</p>
+                <form>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="name" placeholder="Seu Nome">
+                                <label for="name">Seu Nome</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="email" placeholder="Seu E-mail">
+                                <label for="email">Seu E-mail</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="subject" placeholder="Assunto">
+                                <label for="subject">Assunto</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" placeholder="Deixe a sua mensagem aqui" id="message" style="height: 200px"></textarea>
+                                <label for="message">Mensagem</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary rounded-pill py-3 px-5" type="submit">Enviar mensagem</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
+                <h3 class="mb-4">Detalhe de contactos</h3>
+                <div class="d-flex border-bottom pb-3 mb-3">
+                    <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
+                        <i class="fa fa-map-marker-alt text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h6>NOsso escritório</h6>
+                        <span>{{contact.address}}</span>
+                    </div>
+                </div>
+                <div class="d-flex border-bottom pb-3 mb-3">
+                    <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
+                        <i class="fa fa-phone-alt text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h6>Ligue pra nós</h6>
+                        <span>{{contact.telefonea}}</span>
+                    </div>
+                </div>
+                <div class="d-flex border-bottom-0 pb-3 mb-3">
+                    <div class="flex-shrink-0 btn-square bg-primary rounded-circle">
+                        <i class="fa fa-envelope text-white"></i>
+                    </div>
+                    <div class="ms-3">
+                        <h6>Deixe um E-mail</h6>
+                        <span>{{contact.emaila}}</span>
+                    </div>
+                </div>
+
+                <iframe class="w-100 rounded"
+                src="https://www.google.com/maps/embed?pb=!1m16!1m12!1m3!1d3553.364128923508!2d12.37523748452801!3d-6.152030434013961!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sRua%20direita%20do%20Pangala%20junto%20%C3%A0%20Ag%C3%AAncia%20do%20Bai%2C%20edif%C3%ADcio%20Real%20Madrid%20no%201%C2%BA%20Andar.%20Soyo%20-%20Angola!5e0!3m2!1sen!2sao!4v1699787121080!5m2!1sen!2sao"
+                frameborder="0" style="min-height: 300px; border:0;" allowfullscreen="" aria-hidden="false"
+                tabindex="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Contact End -->
+
+
+{% endblock %}

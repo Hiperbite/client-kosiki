@@ -72,6 +72,9 @@ class Post
     #[ORM\OrderBy(['publishedAt' => 'DESC'])]
     private Collection $comments;
 
+    #[ORM\Column(type: 'string', nullable:true)]
+    private ?string $imageFilename=null;
+
     /**
      * @var Collection<int, Tag>
      */
@@ -92,7 +95,17 @@ class Post
     {
         return $this->id;
     }
+    public function getImageFilename(): string
+    {
+        return $this->imageFilename ?? '';
+    }
 
+    public function setImageFilename(string $imageFilename): self
+    {
+        $this->imageFilename = $imageFilename;
+
+        return $this;
+    }
     public function getTitle(): ?string
     {
         return $this->title;

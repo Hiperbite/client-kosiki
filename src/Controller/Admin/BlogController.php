@@ -19,12 +19,15 @@ use App\Security\PostVoter;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use App\Service\FileUploader;
 use Symfony\Component\Form\SubmitButton;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
  * Controller used to manage blog contents in the backend.
@@ -55,9 +58,12 @@ final class BlogController extends AbstractController
     #[Route('/', name: 'admin_index', methods: ['GET'])]
     #[Route('/', name: 'admin_post_index', methods: ['GET'])]
     public function index(
-        #[CurrentUser] User $user,
         PostRepository $posts,
     ): Response {
+
+        $user = $this->getUser();
+        assert($user instanceof User);
+
         $authorPosts = $posts->findBy(['author' => $user], ['publishedAt' => 'DESC']);
 
         return $this->render('admin/blog/index.html.twig', ['posts' => $authorPosts]);
@@ -72,10 +78,14 @@ final class BlogController extends AbstractController
      */
     #[Route('/new', name: 'admin_post_new', methods: ['GET', 'POST'])]
     public function new(
-        #[CurrentUser] User $user,
         Request $request,
         EntityManagerInterface $entityManager,
+        FileUploader $fileUploader
     ): Response {
+
+        $user = $this->getUser();
+        assert($user instanceof User);
+
         $post = new Post();
         $post->setAuthor($user);
 
@@ -91,6 +101,13 @@ final class BlogController extends AbstractController
         // However, we explicitly add it to improve code readability.
         // See https://symfony.com/doc/current/forms.html#processing-forms
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $post->setImageFilename($imageFileName);
+            }
             $entityManager->persist($post);
             $entityManager->flush();
 
@@ -136,12 +153,28 @@ final class BlogController extends AbstractController
      */
     #[Route('/{id<\d+>}/edit', name: 'admin_post_edit', methods: ['GET', 'POST'])]
     #[IsGranted('edit', subject: 'post', message: 'Posts can only be edited by their authors.')]
-    public function edit(Request $request, Post $post, EntityManagerInterface $entityManager): Response
+    public function edit(
+        Request $request, 
+        Post $post, 
+        EntityManagerInterface $entityManager, 
+        FileUploader $fileUploader): Response
     {
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $imageFile = $form->get('image')->getData();
+
+            if ($imageFile) {
+                $imageFileName = $fileUploader->upload($imageFile);
+                $post->setImageFilename($imageFileName);
+            }
+            
+            // this condition is needed because the 'image' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+           
+
             $entityManager->flush();
             $this->addFlash('success', 'post.updated_successfully');
 

@@ -1,0 +1,287 @@
+{#
+    This is the base template used as the application layout which contains the
+    common elements and decorates all the other templates.
+    See https://symfony.com/doc/current/templates.html#template-inheritance-and-layouts
+ #}
+ <!DOCTYPE html>
+ <html lang="{{ app.request.locale }}">
+     <head>
+ 
+ 
+         <meta charset="utf-8">
+     <title>KOSIKI - Digital Marketing HTML Template</title>
+     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+     <meta content="" name="keywords">
+     <meta content="" name="description">
+ 
+     <meta charset="UTF-8" />
+     <meta name="viewport" content="width=device-width, initial-scale=1"/>
+     <title>{% block title %}Symfony Demo application{% endblock %}</title>
+     <link rel="alternate" type="application/rss+xml" title="{{ 'rss.title'|trans }}" href="{{ path('blog_rss') }}">
+ 
+ 
+     <!-- Favicon -->
+     <link href="img/favicon.ico" rel="icon">
+ 
+     <!-- Google Web Fonts -->
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+     <link
+         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Roboto:wght@500;700&display=swap"
+         rel="stylesheet">
+ 
+     <!-- Icon Font Stylesheet -->
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+ 
+     <!-- Libraries Stylesheet -->
+     <link href="/lib/animate/animate.min.css" rel="stylesheet">
+     <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+     <link href="/lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+ 
+     <!-- Customized Bootstrap Stylesheet -->
+     <link href="/css/bootstrap.min.css" rel="stylesheet">
+ 
+     <!-- Template Stylesheet -->
+     <link href="/css/style.css" rel="stylesheet">
+ 
+     
+         {#
+             Those two blocks defines frontend entrypoint for CSS and JavaScript assets
+             See https://symfony.com/doc/current/frontend.html
+         #}
+ 
+         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+     </head>
+ 
+     <body id="{% block body_id %}{% endblock %}">
+ 
+             {% set _route = app.request.get('_route') %}
+ 
+             <!-- Spinner Start -->
+             <div id="spinner"
+                 class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                 <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;"></div>
+             </div>
+             <!-- Spinner End -->
+         
+         
+             <!-- Topbar Start -->
+             <div class="container-fluid bg-primary text-white d-none d-lg-flex">
+                 <div class="container py-3">
+                     <div class="d-flex align-items-center">
+                         <a href="{{path('homepage')}}">
+                            
+                         </a>
+ 
+                         <div class="ms-auto d-flex align-items-center">
+                             <small class="ms-4"><i class="fa fa-map-marker-alt me-3"></i>Soyo - Angola</small>
+                             <small class="ms-4"><i class="fa fa-envelope me-3"></i>vendas@kosiki.ao</small>
+                             <small class="ms-4"><i class="fa fa-phone-alt me-3"></i>+244 926507437                    </small>
+                             <div class="ms-3 d-flex">
+                                 <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                                         class="fab fa-facebook-f"></i></a>
+                                 <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                                         class="fab fa-twitter"></i></a>
+                                 <a class="btn btn-sm-square btn-light text-primary rounded-circle ms-2" href=""><i
+                                         class="fab fa-linkedin-in"></i></a>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+             <!-- Topbar End -->
+         
+         
+             <!-- Navbar Start -->
+             <div class="container-fluid bg-white sticky-top">
+                 <div class="container">
+                     <nav class="navbar navbar-expand-lg bg-white navbar-light p-lg-0">
+                         <a href="index.html" class="navbar-brand d-lg-none">
+                             <a href="{{path('homepage')}}">
+                                {{ render(controller(
+                                    'App\\Controller\\CompanyController::mainLogo',
+                                    { 'id': 1 }
+                                )) }}
+                             </a>
+                         </a>
+                         <button type="button" class="navbar-toggler me-0" data-bs-toggle="collapse"
+                             data-bs-target="#navbarCollapse">
+                             <span class="navbar-toggler-icon"></span>
+                         </button>
+                         <div class="collapse navbar-collapse" id="navbarCollapse">
+                             <div class="navbar-nav">
+                                 <a href="{{ path('homepage') }}" class="nav-item nav-link {{ _route == 'homepage' ? ' active' : '' }}">Inicio</a>
+                                 <a href="{{ path('about_page') }}" class="nav-item nav-link {{ _route == 'about_page' ? ' active' : '' }}">Sobre nós</a>
+                                 <a href="{{ path('services_page') }}" class="nav-item nav-link {{ _route == 'services_page' ? ' active' : '' }}">Serviços</a>
+                                 <div class="nav-item dropdown  position-static">
+                                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Produtos</a>
+                                     <div class="dropdown-menu bg-light rounded-0 rounded-bottom m-0">
+                                        
+                                            {{ render(controller(
+                                                'App\\Controller\\TagController::indexMenuList',
+                                                { 'page': 1 }
+                                            )) }}
+                                            
+                                     </div>
+                                 </div>
+                                 <a href="{{ path('contacts_page') }}" class="nav-item nav-link {{ _route == 'contacts_page' ? ' active' : '' }}">Contactos</a>
+                             </div>
+                             <div class="ms-auto d-none d-lg-block">
+                            <a href="{{ path('admin_index') }}" class="btn btn-primary rounded-pill py-2 px-3"><i class="fa fa-lock" aria-hidden="true"></i></a>
+                                 
+                             </div>
+                             
+                         </div>
+                     </nav>
+                 </div>
+             </div>
+             <!-- Navbar End -->
+ 
+                                                                                                                                                                                                                                                        
+ 
+             <div id="locale-selector-modal" class="modal" tabindex="-1" aria-hidden="true">
+                 <div class="modal-lg modal-dialog modal-dialog-centered">
+                     <div class="modal-content">
+                         <div class="modal-header">
+                             <p class="modal-title" lang="en">
+                                 {# display this title always in English to make the language selector easier to use #}
+                                 Choose your language
+                             </p>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                             </button>
+                         </div>
+ 
+                         <div class="modal-body">
+                             <ul class="locales">
+                                 {% for locale in [] %}
+                                     {% set is_active = app.request.locale == locale.code %}
+                                     {% set is_rtl = locale.code in ['ar', 'fa', 'he'] %}
+                                     <li class="{{ is_active ? 'active' }} {{ is_rtl ? 'rtl' }}" translate="no">
+                                         <a class="stretched-link" lang="{{ locale.code }}" hreflang="{{ locale.code }}" href="{{ path(app.request.get('_route', 'blog_index'), app.request.get('_route_params', [])|merge({_locale: locale.code})) }}">
+                                             {{ locale.name|capitalize }}
+                                             <small>{{ locale.code }}</small>
+                                         </a>
+                                     </li>
+                                 {% endfor %}
+                             </ul>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+ 
+         {% block body %}
+         {% endblock %}
+         
+         {% block footer %}
+                    
+            <!-- Footer Start -->
+            <div class="container-fluid bg-dark footer mt-5 py-5 wow fadeIn" data-wow-delay="0.1s">
+                <div class="container py-5">
+                    <div class="row g-5">
+                        <div class="col-lg-3 col-md-6">
+                            <a href="{{path('homepage')}}">
+                                <h3  class="text-white mb-4">Kosiki</h3>
+                             </a>
+                            <h4 class="text-white mb-4">Nosso endereço</h4>
+                            <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Rua direita do Pangala junto à Agência do Bai,
+
+                                edifício Real Madrid no 1º Andar.
+                                
+                                Soyo - Angola</p>
+                            <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+244 9265074370</p>
+                            <p class="mb-2"><i class="fa fa-envelope me-3"></i>vendas@kosiki.ao</p>
+                            <div class="d-flex pt-3">
+                                <a class="btn btn-square btn-light rounded-circle me-2" href=""><i
+                                        class="fab fa-twitter"></i></a>
+                                <a class="btn btn-square btn-light rounded-circle me-2" href=""><i
+                                        class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-square btn-light rounded-circle me-2" href=""><i
+                                        class="fab fa-youtube"></i></a>
+                                <a class="btn btn-square btn-light rounded-circle me-2" href=""><i
+                                        class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <h4 class="text-white mb-4">Links úteis</h4>
+                            <a class="btn btn-link" href="">Sobre nós</a>
+                            <a class="btn btn-link" href="">Contactos</a>
+                            <a class="btn btn-link" href="">Nossos Serviços</a>
+                            <a class="btn btn-link" href="">Termos & Condições</a>
+                            <a class="btn btn-link" href="">Suporte</a>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <h4 class="text-white mb-4">Horários de trabalho</h4>
+                            <p class="mb-1">Segunda - Sexta</p>
+                            <h6 class="text-light">08:00 - 17:00</h6>
+                            <p class="mb-1">Sábado - Feriados</p>
+                            <h6 class="text-light">08:00 - 12:00</h6>
+                            <p class="mb-1">Domingo</p>
+                            <h6 class="text-light">Fechado</h6>
+                        </div>
+                        <div class="col-lg-3 col-md-6">
+                            <h4 class="text-white mb-4">Newsletter</h4>
+                            <p>Subscreva a nossa newsleter e mantenha te informado</p>
+                            <div class="position-relative w-100">
+                                <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text"
+                                    placeholder="Seu E-mail">
+                                <button type="button"
+                                    class="btn btn-light py-2 position-absolute top-0 end-0 mt-2 me-2">Subscrever</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+
+
+            <!-- Copyright Start -->
+            <div class="container-fluid copyright py-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="fw-medium text-light" href="#">Kosiki</a>, All Right Reserved.
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+                            Designed and 
+                            Distributed By <a class="fw-medium text-light" href="https://hiperbite.ao">HIPERBITE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Copyright End -->
+
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+                    class="bi bi-arrow-up"></i></a>
+
+
+         {% endblock %}
+ 
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/wow/wow.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="/lib/lightbox/js/lightbox.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="/js/main.js"></script>
+
+
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+         {# it's not mandatory to set the timezone in localizeddate(). This is done to
+            avoid errors when the 'intl' PHP extension is not available and the application
+            is forced to use the limited "intl polyfill", which only supports UTC and GMT #}
+         <!-- Page rendered on {{ 'now'|format_datetime('long', 'long', '', 'UTC') }} -->
+     </body>
+ </html>
+ 

@@ -1,0 +1,25 @@
+{% for post in posts.results %}
+
+                <div class="project-item mb-5">
+                    <div class="position-relative">
+                        <img class="img-fluid" src="{{ asset('uploads/images/' ~ post.imageFilename)  }}" alt="">
+                        <div class="project-overlay">
+                            <a class="btn btn-lg-square btn-light rounded-circle m-1" href="{{ asset('uploads/images/' ~ post.imageFilename)  }}"
+                                data-lightbox="project"><i class="fa fa-eye"></i></a>
+                            <a class="btn btn-lg-square btn-light rounded-circle m-1" href="{{ path('product_page',{id: post.id}) }}"><i
+                                    class="fa fa-link"></i></a>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <a class="d-block h5" href="">{{ post.title }}</a>
+                        <span>{{ post.summary }}</span>
+                        {% for tag in post.tags %}
+                            <span class="badge text-bg-warning">Warning</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <tr>
+                    <td colspan="4" align="center">{{ 'post.no_posts_found'|trans }}</td>
+            </tr>
+            {% endfor %}

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block body %}
+    <h1>Contact</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contact.id }}</td>
+            </tr>
+            <tr>
+                <th>Emaila</th>
+                <td>{{ contact.emaila }}</td>
+            </tr>
+            <tr>
+                <th>Emailb</th>
+                <td>{{ contact.emailb }}</td>
+            </tr>
+            <tr>
+                <th>Telefonea</th>
+                <td>{{ contact.telefonea }}</td>
+            </tr>
+            <tr>
+                <th>Telefoneb</th>
+                <td>{{ contact.telefoneb }}</td>
+            </tr>
+            <tr>
+                <th>Website</th>
+                <td>{{ contact.website }}</td>
+            </tr>
+            <tr>
+                <th>Facebook</th>
+                <td>{{ contact.facebook }}</td>
+            </tr>
+            <tr>
+                <th>Linkedin</th>
+                <td>{{ contact.linkedin }}</td>
+            </tr>
+            <tr>
+                <th>Twitter</th>
+                <td>{{ contact.twitter }}</td>
+            </tr>
+            <tr>
+                <th>Youtube</th>
+                <td>{{ contact.youtube }}</td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ contact.address }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_contact_index') }}">back to list</a>
+
+    <a href="{{ path('app_contact_edit', {'id': contact.id}) }}">edit</a>
+
+    {{ include('contact/_delete_form.html.twig') }}
+{% endblock %}
